@@ -1,19 +1,16 @@
 import "./ModalWithForm.css";
 
-function ModalWithForm({
-  children,
-  title,
-  buttonText,
-  activeModal,
-  handleCloseModal,
-}) {
+function ModalWithForm({ children, title, buttonText, activeModal, onClose }) {
   return (
-    <div className={`modal ${activeModal === "add-garmet" && "modal_open"}`}>
-      <div className="modal__content">
+    <div
+      onClick={onClose}
+      className={`modal ${activeModal === "add-garmet" && "modal_open"}`}
+    >
+      <div onClick={(e) => e.stopPropagation()} className="modal__content">
         <form className="modal__form">
           <h2 className="modal__title">{title}</h2>
           <button
-            onClick={handleCloseModal}
+            onClick={onClose}
             type="button"
             className="modal__close-btn"
           ></button>

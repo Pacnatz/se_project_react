@@ -1,0 +1,40 @@
+.modal__content_type_image {
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.modal__close-btn_type_image {
+  top: 24px;
+  right: 24px;
+}
+
+.modal__image {
+  max-width: 100%;
+  object-fit: contain;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.modal__footer {
+  padding: 20px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.modal__name {
+  margin: 0;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.modal__temp {
+  margin: 0;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
