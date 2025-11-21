@@ -1,3 +1,66 @@
+const weatherOptions = [
+  {
+    day: true,
+    condition: "clear",
+    url: new URL("../assets/day/clear.png", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "clouds",
+    url: new URL("../assets/day/clouds.png", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "atmosphere",
+    url: new URL("../assets/day/atmosphere.png", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "rain",
+    url: new URL("../assets/day/rain.png", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "snow",
+    url: new URL("../assets/day/snow.png", import.meta.url).href,
+  },
+  {
+    day: true,
+    condition: "storm",
+    url: new URL("../assets/day/storm.png", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "clear",
+    url: new URL("../assets/night/clear.png", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "clouds",
+    url: new URL("../assets/night/clouds.png", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "atmosphere",
+    url: new URL("../assets/night/atmosphere.png", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "rain",
+    url: new URL("../assets/night/rain.png", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "snow",
+    url: new URL("../assets/night/snow.png", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "thunderstorm",
+    url: new URL("../assets/night/thunderstorm.png", import.meta.url).href,
+  },
+];
+
 // The utils files contain default clothing items
 const defaultClothingItems = [
   {
@@ -98,4 +161,11 @@ const defaultClothingItems = [
   },
 ];
 
-export { defaultClothingItems };
+const coordinates = {
+  latitude: 33.001373926111334,
+  longitude: -96.90644647091993,
+};
+
+const APIkey = "b88a09b76fc6a629577dbebc8869fa6a";
+
+export { weatherOptions, defaultClothingItems, coordinates, APIkey };
