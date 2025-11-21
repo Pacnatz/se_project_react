@@ -4,7 +4,7 @@ function ItemModal({ activeModal, card, onClose }) {
   return (
     <div
       onClick={onClose}
-      className={`modal ${activeModal === "preview" && "modal_open"}`}
+      className={`modal__item ${activeModal === "preview" && "modal_open"}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}

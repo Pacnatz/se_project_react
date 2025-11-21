@@ -26,3 +26,10 @@
   -webkit-user-drag: none;
   user-select: none;
 }
+
+@media screen and (max-width: 500px) {
+  .card__img {
+    height: 160px;
+    width: 160px;
+  }
+}

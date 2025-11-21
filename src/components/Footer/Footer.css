@@ -23,3 +23,10 @@
   text-align: right;
   vertical-align: bottom;
 }
+
+@media screen and (max-width: 500px) {
+  .footer {
+    margin-top: 147px;
+    padding-bottom: 20px;
+  }
+}

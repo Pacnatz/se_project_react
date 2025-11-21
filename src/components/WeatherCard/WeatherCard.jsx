@@ -2,7 +2,7 @@ import "./WeatherCard.css";
 import { weatherOptions } from "../../utils/constants";
 import { useEffect } from "react";
 
-function WeatherCard({ weatherData }) {
+function WeatherCard({ profileMenuOpened, weatherData }) {
   let weatherOption = weatherOptions.filter((option) => {
     return (
       option.day === weatherData.isDay &&
@@ -16,7 +16,11 @@ function WeatherCard({ weatherData }) {
   }
 
   return (
-    <section className="weather-card">
+    <section
+      className={`weather-card ${
+        profileMenuOpened ? "weather-card_hidden" : ""
+      }`}
+    >
       <p className="weather-card__temp">{weatherData.temp.F}&deg; F</p>
       <img
         src={weatherOption[0]?.url}

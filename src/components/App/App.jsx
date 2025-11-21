@@ -10,6 +10,7 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { coordinates, APIkey } from "../../utils/constants";
 
 function App() {
+  const [profileMenuOpened, setProfileMenuOpened] = useState(false);
   const [weatherData, setWeatherData] = useState({
     type: "cold",
     temp: { F: "999", C: "999" },
@@ -17,6 +18,14 @@ function App() {
   });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
+
+  const openProfileMenu = () => {
+    setProfileMenuOpened(true);
+  };
+
+  const closeProfileMenu = () => {
+    setProfileMenuOpened(false);
+  };
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -68,8 +77,17 @@ function App() {
   return (
     <div className="app">
       <div className="app__content">
-        <Header onAddButtonClick={handleAddClick} weatherData={weatherData} />
-        <Main weatherData={weatherData} handleCardClick={handleCardClick} />
+        <Header
+          profileOpened={profileMenuOpened}
+          onProfileButtonClick={setProfileMenuOpened}
+          onAddButtonClick={handleAddClick}
+          weatherData={weatherData}
+        />
+        <Main
+          profileMenuOpened={profileMenuOpened}
+          weatherData={weatherData}
+          handleCardClick={handleCardClick}
+        />
         <Footer />
       </div>
       <ModalWithForm

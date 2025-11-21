@@ -140,3 +140,29 @@
 .modal__submit-btn:disabled {
   background-color: #0000004d;
 }
+
+@media screen and (max-width: 500px) {
+  .modal {
+    align-items: flex-end;
+  }
+
+  .modal__content {
+    border-radius: 12px 12px 0 0;
+    padding: 32px 16px;
+  }
+
+  .modal__title {
+    font-size: 20px;
+    margin-bottom: 13px;
+  }
+
+  .modal__close-btn {
+    background-image: url("../../assets/close-button-black.svg");
+  }
+
+  .modal__submit-btn {
+    width: 100%;
+    margin-top: 6px;
+    padding: 12px 0;
+  }
+}
