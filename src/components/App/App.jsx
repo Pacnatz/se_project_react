@@ -32,13 +32,37 @@ function App() {
   };
 
   useEffect(() => {
-    getWeather(coordinates, APIkey)
-      .then((data) => {
-        console.log(data);
-        const filteredData = filterWeatherData(data);
-        setWeatherData(filteredData);
-      })
-      .catch(console.error);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          getWeather({ latitude, longitude }, APIkey)
+            .then((data) => {
+              const filteredData = filterWeatherData(data);
+              setWeatherData(filteredData);
+            })
+            .catch(console.error);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          // Fallback to default coordinates
+          getWeather(coordinates, APIkey)
+            .then((data) => {
+              const filteredData = filterWeatherData(data);
+              setWeatherData(filteredData);
+            })
+            .catch(console.error);
+        }
+      );
+    } else {
+      // Geolocation not supported, use default
+      getWeather(coordinates, APIkey)
+        .then((data) => {
+          const filteredData = filterWeatherData(data);
+          setWeatherData(filteredData);
+        })
+        .catch(console.error);
+    }
   }, []);
 
   return (
