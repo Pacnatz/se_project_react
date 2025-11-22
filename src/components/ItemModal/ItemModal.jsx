@@ -1,10 +1,10 @@
 import "./ItemModal.css";
 
-function ItemModal({ activeModal, card, onClose }) {
+function ItemModal({ isOpen, card, onClose }) {
   return (
     <div
       onClick={onClose}
-      className={`modal__item ${activeModal === "preview" && "modal_open"}`}
+      className={`modal__item ${isOpen ? "modal_open" : ""}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -15,7 +15,7 @@ function ItemModal({ activeModal, card, onClose }) {
           type="button"
           className="modal__close-btn modal__close-btn_type_image"
         ></button>
-        <img src={card.link} alt="" className="modal__image" />
+        <img src={card.link} alt={card.name} className="modal__image" />
         <div className="modal__footer">
           <p className="modal__name">{card.name}</p>
           <p className="modal__temp">Weather: {card.weather}</p>

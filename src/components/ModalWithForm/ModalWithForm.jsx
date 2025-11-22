@@ -1,10 +1,10 @@
 import "./ModalWithForm.css";
 
-function ModalWithForm({ children, title, buttonText, activeModal, onClose }) {
+function ModalWithForm({ children, title, buttonText, name, isOpen, onClose }) {
   return (
     <div
       onClick={onClose}
-      className={`modal ${activeModal === "add-garmet" && "modal_open"}`}
+      className={`modal ${isOpen ? "modal_open" : ""} modal_type_${name}`}
     >
       <div onClick={(e) => e.stopPropagation()} className="modal__content">
         <form className="modal__form">

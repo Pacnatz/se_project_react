@@ -1,4 +1,4 @@
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 import Header from "../Header/Header";
@@ -7,7 +7,11 @@ import Footer from "../Footer/Footer";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { coordinates, APIkey } from "../../utils/constants";
+import {
+  defaultClothingItems,
+  coordinates,
+  apiKey,
+} from "../../utils/constants";
 
 function App() {
   const [profileMenuOpened, setProfileMenuOpened] = useState(false);
@@ -16,6 +20,7 @@ function App() {
     temp: { F: "999", C: "999" },
     city: "",
   });
+  const [defaultCloths, setDefaultClothes] = useState(defaultClothingItems);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -33,8 +38,11 @@ function App() {
   };
 
   const handleAddClick = () => {
-    setActiveModal("add-garmet");
+    setActiveModal("add-garment");
   };
+
+  const isAddOpen = activeModal == "add-garment";
+  const isPreviewOpen = activeModal == "preview";
 
   const closeActiveModal = () => {
     setActiveModal("");
@@ -45,7 +53,7 @@ function App() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          getWeather({ latitude, longitude }, APIkey)
+          getWeather({ latitude, longitude }, apiKey)
             .then((data) => {
               const filteredData = filterWeatherData(data);
               setWeatherData(filteredData);
@@ -55,7 +63,7 @@ function App() {
         (error) => {
           console.error("Error getting location:", error);
           // Fallback to default coordinates
-          getWeather(coordinates, APIkey)
+          getWeather(coordinates, apiKey)
             .then((data) => {
               const filteredData = filterWeatherData(data);
               setWeatherData(filteredData);
@@ -65,7 +73,7 @@ function App() {
       );
     } else {
       // Geolocation not supported, use default
-      getWeather(coordinates, APIkey)
+      getWeather(coordinates, apiKey)
         .then((data) => {
           const filteredData = filterWeatherData(data);
           setWeatherData(filteredData);
@@ -86,6 +94,7 @@ function App() {
         <Main
           profileMenuOpened={profileMenuOpened}
           weatherData={weatherData}
+          defaultCloths={defaultCloths}
           handleCardClick={handleCardClick}
         />
         <Footer />
@@ -93,7 +102,8 @@ function App() {
       <ModalWithForm
         title="New garment"
         buttonText="Add garment"
-        activeModal={activeModal}
+        name="add-garment"
+        isOpen={isAddOpen}
         onClose={closeActiveModal}
       >
         <label htmlFor="name" className="modal__label">
@@ -103,15 +113,17 @@ function App() {
             id="name"
             className="modal__input"
             placeholder="Name"
+            required
           />
         </label>
         <label htmlFor="imageURL" className="modal__label">
-          Image
+          Image URL
           <input
             type="url"
             id="imageURL"
             className="modal__input"
             placeholder="Image URL"
+            required
           />
         </label>
         <fieldset className="modal__radio-btns">
@@ -121,6 +133,8 @@ function App() {
               name="temperature"
               id="hot"
               type="radio"
+              value="hot"
+              required
               className="modal__radio-input"
             />
             Hot
@@ -133,6 +147,7 @@ function App() {
               name="temperature"
               id="warm"
               type="radio"
+              value="warm"
               className="modal__radio-input"
             />
             Warm
@@ -145,6 +160,7 @@ function App() {
               name="temperature"
               id="cold"
               type="radio"
+              value="cold"
               className="modal__radio-input"
             />
             Cold
@@ -152,7 +168,7 @@ function App() {
         </fieldset>
       </ModalWithForm>
       <ItemModal
-        activeModal={activeModal}
+        isOpen={isPreviewOpen}
         card={selectedCard}
         onClose={closeActiveModal}
       />
