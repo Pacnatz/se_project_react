@@ -1,8 +1,10 @@
 import "./WeatherCard.css";
 import { weatherOptions } from "../../utils/constants";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 
-function WeatherCard({ profileMenuOpened, weatherData }) {
+function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
+  const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   let weatherOption = weatherOptions.filter((option) => {
     return (
       option.day === weatherData.isDay &&
@@ -21,7 +23,10 @@ function WeatherCard({ profileMenuOpened, weatherData }) {
         profileMenuOpened ? "weather-card_hidden" : ""
       }`}
     >
-      <p className="weather-card__temp">{weatherData.temp.F}&deg; F</p>
+      <p className="weather-card__temp">
+        {isWeatherDataLoading ? "" : weatherData.temp[currentTemperatureUnit]}
+        &deg;{currentTemperatureUnit}
+      </p>
       <img
         src={weatherOption[0]?.url}
         alt={`Card showing: ${weatherOption[0]?.day ? "day" : "night"} ${

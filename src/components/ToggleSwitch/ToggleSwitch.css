@@ -1,4 +1,6 @@
 .toggle-switch {
+  margin: 6px 0 9px;
+  min-width: 56px;
   position: relative;
   width: 56px;
   height: 28px;
@@ -34,12 +36,8 @@
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-weight: 700;
   font-size: 14px;
-  color: #fff;
-  z-index: 1;
-}
-
-.toggle-switch__checkbox:checked ~ .toggle-switch__text .toggle-switch__text_F {
   color: #7e7e7e;
+  z-index: 1;
 }
 
 .toggle-switch__text_C {
@@ -50,10 +48,6 @@
   font-weight: 700;
   font-size: 14px;
   color: #7e7e7e;
-}
-
-.toggle-switch__checkbox:checked ~ .toggle-switch__text .toggle-switch__text_C {
-  color: #fff;
 }
 
 .toggle-switch__thumb {
@@ -71,7 +65,7 @@
   .toggle-switch__checkbox:not(:checked)
   ~ .toggle-switch__thumb {
   /* styles when hovering and unchecked */
-  left: 0;
+  left: 0px;
 }
 
 .toggle-switch__checkbox:checked ~ .toggle-switch__thumb {
