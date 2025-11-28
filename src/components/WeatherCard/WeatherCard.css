@@ -6,9 +6,6 @@
   overflow: hidden;
 }
 
-.weather-card_hidden {
-}
-
 .weather-card__temp {
   margin: 0;
   position: absolute;
@@ -28,7 +25,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 630px) {
   .weather-card {
     padding-bottom: 12px;
   }

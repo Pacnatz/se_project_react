@@ -15,7 +15,7 @@
   gap: 21px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 630px) {
   .cards__text {
     margin: 20px 0;
     font-size: 18px;

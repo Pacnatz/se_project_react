@@ -28,7 +28,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 630px) {
   .card__img {
     height: 160px;
     width: 160px;

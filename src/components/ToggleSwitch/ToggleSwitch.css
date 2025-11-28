@@ -1,0 +1,85 @@
+.toggle-switch {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  border: 2px solid #7e7e7e;
+  border-radius: 20px;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+}
+
+.toggle-switch:hover {
+  border: 2px solid #000;
+}
+
+.toggle-switch__checkbox {
+  opacity: 0;
+}
+
+.toggle-switch__text {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  isolation: isolate;
+}
+.toggle-switch__text_F {
+  flex: 1;
+  margin: 0;
+  text-align: center;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  z-index: 1;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__text .toggle-switch__text_F {
+  color: #7e7e7e;
+}
+
+.toggle-switch__text_C {
+  flex: 1;
+  margin: 0;
+  text-align: center;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #7e7e7e;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__text .toggle-switch__text_C {
+  color: #fff;
+}
+
+.toggle-switch__thumb {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #000;
+  transition: left 0.1s ease-in-out;
+}
+
+.toggle-switch:hover
+  .toggle-switch__checkbox:not(:checked)
+  ~ .toggle-switch__thumb {
+  /* styles when hovering and unchecked */
+  left: 0;
+}
+
+.toggle-switch__checkbox:checked ~ .toggle-switch__thumb {
+  /* styles when not hovering and checked */
+  left: 26px;
+}
+
+.toggle-switch:hover .toggle-switch__checkbox:checked ~ .toggle-switch__thumb {
+  /* styles when hovering and checked */
+  left: 24px;
+}

@@ -24,7 +24,7 @@
   vertical-align: bottom;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 630px) {
   .footer {
     margin-top: 147px;
     padding-bottom: 20px;

@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.svg";
+import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 
 function Header({
   profileOpened,
@@ -52,6 +53,7 @@ function Header({
           type="button"
           className="header__close-btn"
         ></button>
+        <ToggleSwitch />
         <button
           onClick={onAddButtonClick}
           type="button"

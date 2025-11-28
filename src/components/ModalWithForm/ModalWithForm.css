@@ -141,7 +141,7 @@
   background-color: #0000004d;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 630px) {
   .modal {
     align-items: flex-end;
   }
