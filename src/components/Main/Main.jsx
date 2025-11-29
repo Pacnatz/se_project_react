@@ -2,12 +2,12 @@ import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { useContext } from "react";
-import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({
   profileMenuOpened,
   weatherData,
-  defaultCloths,
+  clothingItems,
   handleCardClick,
   isWeatherDataLoading,
 }) {
@@ -26,7 +26,7 @@ function Main({
             : `Today is ${weatherData.temp[currentTemperatureUnit]}° ${currentTemperatureUnit} / You may want to wear:`}
         </p>
         <ul className="cards__list">
-          {defaultCloths
+          {clothingItems
             .filter((item) => {
               return item.weather === weatherData.type;
             })

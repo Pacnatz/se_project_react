@@ -1,7 +1,7 @@
 import "./WeatherCard.css";
 import { weatherOptions } from "../../utils/constants";
 import { useContext, useEffect } from "react";
-import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
+import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
@@ -28,7 +28,7 @@ function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
         &deg;{currentTemperatureUnit}
       </p>
       <img
-        src={weatherOption[0]?.url}
+        src={isWeatherDataLoading ? "" : weatherOption[0]?.url}
         alt={`Card showing: ${weatherOption[0]?.day ? "day" : "night"} ${
           weatherOption[0]?.condition
         }`}
