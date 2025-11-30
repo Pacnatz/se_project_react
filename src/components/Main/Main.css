@@ -17,7 +17,7 @@
 
 @media screen and (max-width: 630px) {
   .cards__text {
-    margin: 20px 0;
+    margin: 32px 0 20px;
     font-size: 18px;
   }
 

@@ -77,3 +77,9 @@
   /* styles when hovering and checked */
   left: 24px;
 }
+
+@media screen and (max-width: 630px) {
+  .toggle-switch {
+    margin: 0;
+  }
+}

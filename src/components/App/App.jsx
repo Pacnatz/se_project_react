@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
+import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
@@ -13,7 +15,6 @@ import {
   apiKey,
 } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
-import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [profileMenuOpened, setProfileMenuOpened] = useState(false);
@@ -130,13 +131,29 @@ function App() {
             onAddButtonClick={handleAddClick}
             weatherData={weatherData}
           />
-          <Main
-            profileMenuOpened={profileMenuOpened}
-            weatherData={weatherData}
-            clothingItems={clothingItems}
-            handleCardClick={handleCardClick}
-            isWeatherDataLoading={isWeatherDataLoading}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  profileMenuOpened={profileMenuOpened}
+                  weatherData={weatherData}
+                  clothingItems={clothingItems}
+                  handleCardClick={handleCardClick}
+                  isWeatherDataLoading={isWeatherDataLoading}
+                />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  clothingItems={clothingItems}
+                  handleCardClick={handleCardClick}
+                />
+              }
+            />
+          </Routes>
           <Footer />
         </div>
         <AddItemModal

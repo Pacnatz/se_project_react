@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import "./Header.css";
 import logo from "../../assets/logo.svg";
@@ -24,23 +25,39 @@ function Header({
     onProfileButtonClick(false);
   };
 
+  const location = useLocation();
+  // Used to style at a specific route
+  const isProfile = location.pathname === "/profile";
+
   return (
     <header className={profileOpened ? "header_open" : "header"}>
       <div
         className={
-          profileOpened
-            ? "header__menu-container_type_close"
+          isProfile
+            ? "header__menu-container_type_profile"
+            : profileOpened
+            ? "header__menu-container_open"
             : "header__menu-container"
         }
       >
-        <div className="header__menu-top">
+        <div
+          className={
+            isProfile ? "header__menu-top_type_profile" : "header__menu-top"
+          }
+        >
           <img src={logo} alt="WTWR Logo" className="header__logo" />
-          <button onClick={openProfile} className="header__menu-bar"></button>
         </div>
-        <p className="header__date-location">
+        <p
+          className={
+            isProfile
+              ? "header__date-location_type_profile"
+              : "header__date-location"
+          }
+        >
           {currentDate}, {weatherData.city}
         </p>
       </div>
+      <button onClick={openProfile} className="header__menu-bar"></button>
       <div
         className={
           profileOpened
