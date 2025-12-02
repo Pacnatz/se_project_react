@@ -97,6 +97,11 @@
   cursor: pointer;
 }
 
+.header__profile-navlink {
+  text-decoration: none;
+  color: #000;
+}
+
 .header__user-container {
   display: flex;
   align-items: center;

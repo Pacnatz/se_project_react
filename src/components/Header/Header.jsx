@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-
+import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.svg";
@@ -45,7 +45,9 @@ function Header({
             isProfile ? "header__menu-top_type_profile" : "header__menu-top"
           }
         >
-          <img src={logo} alt="WTWR Logo" className="header__logo" />
+          <Link to="/">
+            <img src={logo} alt="WTWR Logo" className="header__logo" />
+          </Link>
         </div>
         <p
           className={
@@ -78,14 +80,16 @@ function Header({
         >
           + Add clothes
         </button>
-        <div className="header__user-container">
-          <p className="header__username">Terrence Tegegne</p>
-          <img
-            src={avatar}
-            alt="Terrence Tegegne"
-            className="header__avatar-img"
-          />
-        </div>
+        <NavLink className="header__profile-navlink" to="/profile">
+          <div className="header__user-container">
+            <p className="header__username">Terrence Tegegne</p>
+            <img
+              src={avatar}
+              alt="Terrence Tegegne"
+              className="header__avatar-img"
+            />
+          </div>
+        </NavLink>
       </div>
     </header>
   );
