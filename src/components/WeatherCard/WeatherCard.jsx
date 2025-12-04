@@ -1,11 +1,11 @@
 import "./WeatherCard.css";
 import { weatherOptions } from "../../utils/constants";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-  let weatherOption = weatherOptions.filter((option) => {
+  let weatherOption = weatherOptions.find((option) => {
     return (
       option.day === weatherData.isDay &&
       option.condition === weatherData.condition
@@ -13,7 +13,7 @@ function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
   });
 
   // Default weathercard
-  if (weatherOption.length === 0) {
+  if (weatherOption === undefined) {
     weatherOption = [weatherOptions[0]];
   }
 
@@ -28,9 +28,9 @@ function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
         &deg;{currentTemperatureUnit}
       </p>
       <img
-        src={isWeatherDataLoading ? "" : weatherOption[0]?.url}
-        alt={`Card showing: ${weatherOption[0]?.day ? "day" : "night"} ${
-          weatherOption[0]?.condition
+        src={isWeatherDataLoading ? "" : weatherOption?.url}
+        alt={`Card showing: ${weatherOption?.day ? "day" : "night"} ${
+          weatherOption?.condition
         }`}
         className="weather-card__img"
       />

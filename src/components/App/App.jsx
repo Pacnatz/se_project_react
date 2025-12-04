@@ -52,14 +52,16 @@ function App() {
   };
 
   const deleteItemHandler = (id) => {
-    deleteCard(id).then(() => {
-      setClothingItems(
-        clothingItems.filter((item) => {
-          return item.id != id;
-        })
-      );
-      closeActiveModal();
-    });
+    deleteCard(id)
+      .then(() => {
+        setClothingItems(
+          clothingItems.filter((item) => {
+            return item.id != id;
+          })
+        );
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   const closeActiveModal = () => {
@@ -106,6 +108,7 @@ function App() {
       );
     } else {
       // Geolocation not supported, use default
+      setIsWeatherDataLoading(false);
       getWeather(coordinates, apiKey)
         .then((data) => {
           const filteredData = filterWeatherData(data);
@@ -115,9 +118,11 @@ function App() {
     }
 
     // Item API onload
-    getItems().then((data) => {
-      setClothingItems(data.reverse());
-    });
+    getItems()
+      .then((data) => {
+        setClothingItems(data.reverse());
+      })
+      .catch(console.error);
   }, []);
 
   useEffect(() => {
@@ -168,6 +173,7 @@ function App() {
               element={
                 <Profile
                   clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
                   handleCardClick={handleCardClick}
                 />
               }
