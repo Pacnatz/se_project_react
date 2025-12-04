@@ -198,9 +198,6 @@
     display: none;
   }
 
-  .header__profile-container_type_expand {
-  }
-
   .header__profile-container_type_open {
     position: absolute;
     top: 16px;

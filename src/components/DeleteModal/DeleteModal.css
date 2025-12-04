@@ -1,0 +1,73 @@
+.delete-modal {
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #0000004d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.delete-modal__content {
+  background-color: #fff;
+  position: relative;
+  padding: 60px 152px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.modal_open {
+  visibility: visible;
+}
+
+.delete-modal__text {
+  margin: 0 0 16px;
+  max-width: 367px;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.delete-modal__confirm {
+  padding: 0;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ff4d00;
+  border: none;
+  background-color: transparent;
+}
+
+.delete-modal__confirm:hover {
+  cursor: pointer;
+}
+
+.delete-modal__cancel {
+  padding: 0;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  border: none;
+  background-color: transparent;
+}
+
+.delete-modal__cancel:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 630px) {
+  .delete-modal__content {
+    padding: 60px 20px;
+  }
+}

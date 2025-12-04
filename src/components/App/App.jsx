@@ -8,12 +8,10 @@ import Profile from "../Profile/Profile";
 import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
+import DeleteModal from "../DeleteModal/DeleteModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import {
-  defaultClothingItems,
-  coordinates,
-  apiKey,
-} from "../../utils/constants";
+import { getItems, addCard, deleteCard } from "../../utils/api";
+import { coordinates, apiKey } from "../../utils/constants";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function App() {
@@ -26,7 +24,7 @@ function App() {
     isDay: false,
   });
   const [isWeatherDataLoading, setIsWeatherDataLoading] = useState(true);
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -40,13 +38,28 @@ function App() {
     setActiveModal("add-garment");
   };
 
+  const handleDeleteModal = () => {
+    setActiveModal("delete");
+  };
+
   const onAddItem = (inputValues) => {
-    const newItem = {
-      ...inputValues,
-      _id: crypto.randomUUID(),
-    };
-    setClothingItems([...clothingItems, newItem]);
-    closeActiveModal();
+    addCard(inputValues)
+      .then((newItem) => {
+        setClothingItems([newItem, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  const deleteItemHandler = (id) => {
+    deleteCard(id).then(() => {
+      setClothingItems(
+        clothingItems.filter((item) => {
+          return item.id != id;
+        })
+      );
+      closeActiveModal();
+    });
   };
 
   const closeActiveModal = () => {
@@ -55,6 +68,7 @@ function App() {
 
   const isAddOpen = activeModal == "add-garment";
   const isPreviewOpen = activeModal == "preview";
+  const isDeleteOpen = activeModal == "delete";
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -99,6 +113,11 @@ function App() {
         })
         .catch(console.error);
     }
+
+    // Item API onload
+    getItems().then((data) => {
+      setClothingItems(data.reverse());
+    });
   }, []);
 
   useEffect(() => {
@@ -165,6 +184,13 @@ function App() {
           isOpen={isPreviewOpen}
           card={selectedCard}
           onClose={closeActiveModal}
+          handleDeleteModal={handleDeleteModal}
+        />
+        <DeleteModal
+          isOpen={isDeleteOpen}
+          card={selectedCard}
+          onClose={closeActiveModal}
+          deleteItemHandler={deleteItemHandler}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
