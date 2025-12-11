@@ -28,6 +28,7 @@ function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -43,12 +44,16 @@ function App() {
   };
 
   const onAddItem = (inputValues) => {
-    addCard(inputValues)
+    return addCard(inputValues)
       .then((newItem) => {
+        setIsLoading(true);
         setClothingItems([newItem, ...clothingItems]);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const deleteItemHandler = (id) => {
@@ -185,6 +190,7 @@ function App() {
           isOpen={isAddOpen}
           onClose={closeActiveModal}
           onAddItem={onAddItem}
+          isLoading={isLoading}
         />
         <ItemModal
           isOpen={isPreviewOpen}
@@ -197,6 +203,7 @@ function App() {
           card={selectedCard}
           onClose={closeActiveModal}
           deleteItemHandler={deleteItemHandler}
+          buttonText={isLoading ? "Deleting..." : "Yes, delete item"}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>

@@ -118,6 +118,12 @@
       "weather": "hot",
       "imageUrl": "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/T-Shirt.png?etag=44ed1963c44ab19cd2f5011522c5fc09",
       "id": "9bec"
+    },
+    {
+      "id": "410e",
+      "name": "Chicken",
+      "imageUrl": "https://www.tasteofhome.com/wp-content/uploads/2018/01/Crispy-Fried-Chicken_EXPS_TOHJJ22_6445_DR-_02_03_11b-14.jpg",
+      "weather": ""
     }
   ]
 }

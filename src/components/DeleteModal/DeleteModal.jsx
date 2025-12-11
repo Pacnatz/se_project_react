@@ -1,6 +1,6 @@
 import "./DeleteModal.css";
 
-function DeleteModal({ isOpen, card, onClose, deleteItemHandler }) {
+function DeleteModal({ isOpen, card, onClose, deleteItemHandler, buttonText }) {
   function handleDelete() {
     deleteItemHandler(card.id);
   }
@@ -27,7 +27,7 @@ function DeleteModal({ isOpen, card, onClose, deleteItemHandler }) {
           type="button"
           className="delete-modal__confirm"
         >
-          Yes, delete item
+          {buttonText}
         </button>
         <button
           onClick={onClose}
