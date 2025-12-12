@@ -13,7 +13,11 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddItem(values).then(setValues(defaultValues));
+    onAddItem(values)
+      .then(() => {
+        setValues(defaultValues);
+      })
+      .catch(console.error);
   }
   return (
     <ModalWithForm

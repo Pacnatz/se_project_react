@@ -44,9 +44,9 @@ function App() {
   };
 
   const onAddItem = (inputValues) => {
+    setIsLoading(true);
     return addCard(inputValues)
       .then((newItem) => {
-        setIsLoading(true);
         setClothingItems([newItem, ...clothingItems]);
         closeActiveModal();
       })
