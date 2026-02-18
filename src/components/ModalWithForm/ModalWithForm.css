@@ -75,7 +75,7 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
-  color: #00000080;
+  color: #000;
 }
 
 .modal__input:focus {
@@ -120,8 +120,27 @@
   color: #000;
 }
 
+.modal__error-message {
+  margin: 0;
+  color: #ff4d00;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.modal__error-message_hidden {
+  display: none;
+}
+
+.modal__submit-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+}
+
 .modal__submit-btn {
-  width: 156px;
   padding: 8px 16px;
   color: #fff;
   background-color: #000;
@@ -140,6 +159,23 @@
 
 .modal__submit-btn:disabled {
   background-color: #0000004d;
+}
+
+.modal__alt-btn {
+  margin-left: 8px;
+  padding: 0;
+  color: #00000080;
+  background-color: transparent;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  border: none;
+}
+
+.modal__alt-btn:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 630px) {

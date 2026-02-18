@@ -5,7 +5,11 @@ export function useForm(defaultValues) {
 
   const handleChange = (evt) => {
     const { value, name } = evt.target;
-    setValues({ ...values, [name]: value });
+    setValues({
+      ...values,
+      [name]: value,
+      formValid: evt.target.form.checkValidity(),
+    });
   };
 
   return { values, handleChange, setValues };

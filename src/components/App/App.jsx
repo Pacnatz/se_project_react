@@ -9,6 +9,8 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
+import LoginModal from "../LoginModal/LoginModal";
+import SignupModal from "../SignupModal/SignupModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { getItems, addCard, deleteCard } from "../../utils/api";
 import { coordinates, apiKey } from "../../utils/constants";
@@ -43,6 +45,14 @@ function App() {
     setActiveModal("delete");
   };
 
+  const handleLoginModal = () => {
+    setActiveModal("login");
+  };
+
+  const handleSignupModal = () => {
+    setActiveModal("signup");
+  };
+
   const onAddItem = (inputValues) => {
     setIsLoading(true);
     return addCard(inputValues)
@@ -62,7 +72,7 @@ function App() {
         setClothingItems(
           clothingItems.filter((item) => {
             return item.id != id;
-          })
+          }),
         );
         closeActiveModal();
       })
@@ -76,6 +86,8 @@ function App() {
   const isAddOpen = activeModal == "add-garment";
   const isPreviewOpen = activeModal == "preview";
   const isDeleteOpen = activeModal == "delete";
+  const isLoginOpen = activeModal == "login";
+  const isSignupOpen = activeModal == "signup";
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -109,7 +121,7 @@ function App() {
             .finally(() => {
               setIsWeatherDataLoading(false);
             });
-        }
+        },
       );
     } else {
       // Geolocation not supported, use default
@@ -147,6 +159,13 @@ function App() {
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]); // watch activeModal here
+
+  // TEST
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "f") {
+      setActiveModal("login");
+    }
+  });
 
   return (
     <CurrentTemperatureUnitContext.Provider
@@ -204,6 +223,16 @@ function App() {
           onClose={closeActiveModal}
           deleteItemHandler={deleteItemHandler}
           buttonText={isLoading ? "Deleting..." : "Yes, delete item"}
+        />
+        <LoginModal
+          isOpen={isLoginOpen}
+          onClose={closeActiveModal}
+          altModal={handleSignupModal}
+        />
+        <SignupModal
+          isOpen={isSignupOpen}
+          onClose={closeActiveModal}
+          altModal={handleLoginModal}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
