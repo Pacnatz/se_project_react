@@ -3,17 +3,31 @@ import { checkResponse } from "./weatherApi";
 const baseURL = "http://localhost:3001";
 // const baseURL = "http://192.168.0.19:3001";
 
-const headers = { "Content-Type": "application/json" };
+const authHeaders = {
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${localStorage.getItem("token")}`,
+};
+
+export const checkToken = () => {
+  return fetch(`${baseURL}/users/me`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }).then(checkResponse);
+};
 
 export const getItems = () => {
   return fetch(`${baseURL}/items`, {
-    headers: headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
   }).then(checkResponse);
 };
 
 export const addCard = ({ name, imageUrl, weather }) => {
   return fetch(`${baseURL}/items`, {
-    headers: headers,
+    headers: authHeaders,
     method: "POST",
     // Send data as a JSON string.
     body: JSON.stringify({
@@ -26,7 +40,7 @@ export const addCard = ({ name, imageUrl, weather }) => {
 
 export const deleteCard = (itemId) => {
   return fetch(`${baseURL}/items/${itemId}`, {
-    headers: headers,
+    headers: authHeaders,
     method: "DELETE",
   }).then(checkResponse);
 };

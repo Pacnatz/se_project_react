@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
+import { use } from "react";
 
 function Header({
   profileOpened,
   onProfileButtonClick,
   onAddButtonClick,
   weatherData,
+  handleLoginModal,
+  handleSignupModal,
 }) {
+  const { isLoggedIn } = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -36,8 +41,8 @@ function Header({
           isProfile
             ? "header__menu-container_type_profile"
             : profileOpened
-            ? "header__menu-container_open"
-            : "header__menu-container"
+              ? "header__menu-container_open"
+              : "header__menu-container"
         }
       >
         <div
@@ -73,23 +78,37 @@ function Header({
           className="header__close-btn"
         ></button>
         <ToggleSwitch />
-        <button
-          onClick={onAddButtonClick}
-          type="button"
-          className="header__add-clothes-btn"
-        >
-          + Add clothes
-        </button>
-        <NavLink className="header__profile-navlink" to="/profile">
-          <div className="header__user-container">
-            <p className="header__username">Terrence Tegegne</p>
-            <img
-              src={avatar}
-              alt="Terrence Tegegne"
-              className="header__avatar-img"
-            />
-          </div>
-        </NavLink>
+        {/* Need to add a div*/}
+        {isLoggedIn ? (
+          <>
+            <button
+              onClick={onAddButtonClick}
+              type="button"
+              className="header__btn"
+            >
+              + Add clothes
+            </button>
+            <NavLink className="header__profile-navlink" to="/profile">
+              <div className="header__user-container">
+                <p className="header__username">Terrence Tegegne</p>
+                <img
+                  src={avatar}
+                  alt="Terrence Tegegne"
+                  className="header__avatar-img"
+                />
+              </div>
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <button onClick={handleSignupModal} className="header__btn">
+              Sign up
+            </button>
+            <button onClick={handleLoginModal} className="header__btn">
+              Log in
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

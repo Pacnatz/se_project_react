@@ -2,7 +2,7 @@ import "./DeleteModal.css";
 
 function DeleteModal({ isOpen, card, onClose, deleteItemHandler, buttonText }) {
   function handleDelete() {
-    deleteItemHandler(card.id);
+    deleteItemHandler(card._id);
   }
   return (
     <div

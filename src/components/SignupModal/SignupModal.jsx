@@ -1,9 +1,17 @@
 import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
-import { register } from "../../utils/auth";
+import { checkToken } from "../../utils/api";
+import { login, register } from "../../utils/auth";
+import { setToken, deleteToken } from "../../utils/token";
 
-function SignupModal({ isOpen, onClose, altModal }) {
+function SignupModal({
+  isOpen,
+  onClose,
+  altModal,
+  setIsLoggedIn,
+  setCurrentUser,
+}) {
   const defaultValues = {
     email: "",
     password: "",
@@ -17,10 +25,31 @@ function SignupModal({ isOpen, onClose, altModal }) {
   function handleSubmit(evt) {
     evt.preventDefault();
     register(values)
-      .then((data) => {
+      .then(() => {
         setShowError(false);
+        // Login Automatically
+        login(values)
+          .then((data) => {
+            setShowError(false);
+            onClose();
+            setToken(data.token);
+            checkToken()
+              .then((user) => {
+                setIsLoggedIn(true);
+                setCurrentUser(user);
+              })
+              .catch((error) => {
+                console.error("Error checking token:", error);
+                setIsLoggedIn(false);
+                setCurrentUser({});
+                deleteToken();
+              });
+          })
+          .catch((error) => {
+            console.error("Login failed:", error);
+            setShowError(true);
+          });
         onClose();
-        console.log(data);
       })
       .catch((error) => {
         console.error("Registration failed:", error);

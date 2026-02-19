@@ -7,6 +7,7 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
     name: "",
     imageUrl: "",
     weather: "",
+    formValid: false,
   };
 
   const { values, handleChange, setValues } = useForm(defaultValues);
@@ -24,6 +25,7 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isSubmitValid={values.formValid}
       isLoading={isLoading ? "Adding..." : "Add garment"}
     >
       <label htmlFor="name" className="modal__label">

@@ -1,9 +1,17 @@
 import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
+import { checkToken } from "../../utils/api";
 import { login } from "../../utils/auth";
+import { setToken, deleteToken } from "../../utils/token";
 
-function LoginModal({ isOpen, onClose, altModal }) {
+function LoginModal({
+  isOpen,
+  onClose,
+  altModal,
+  setIsLoggedIn,
+  setCurrentUser,
+}) {
   const defaultValues = {
     email: "",
     password: "",
@@ -19,12 +27,22 @@ function LoginModal({ isOpen, onClose, altModal }) {
       .then((data) => {
         setShowError(false);
         onClose();
-        console.log(data);
+        setToken(data.token);
+        checkToken()
+          .then((user) => {
+            setIsLoggedIn(true);
+            setCurrentUser(user);
+          })
+          .catch((error) => {
+            console.error("Error checking token:", error);
+            setIsLoggedIn(false);
+            setCurrentUser({});
+            deleteToken();
+          });
       })
       .catch((error) => {
         console.error("Login failed:", error);
         setShowError(true);
-        console.log(showError);
       });
     setValues(defaultValues); // Clear the entry
   }
