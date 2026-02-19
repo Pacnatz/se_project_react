@@ -6,7 +6,6 @@ import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import { use } from "react";
 
 function Header({
   profileOpened,
@@ -16,7 +15,7 @@ function Header({
   handleLoginModal,
   handleSignupModal,
 }) {
-  const { isLoggedIn } = useContext(CurrentUserContext);
+  const { isLoggedIn, currentUser } = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -90,12 +89,18 @@ function Header({
             </button>
             <NavLink className="header__profile-navlink" to="/profile">
               <div className="header__user-container">
-                <p className="header__username">Terrence Tegegne</p>
-                <img
-                  src={avatar}
-                  alt="Terrence Tegegne"
-                  className="header__avatar-img"
-                />
+                <p className="header__username">{currentUser.name}</p>
+                {currentUser.avatar !== "" ? (
+                  <img
+                    src={currentUser.avatar}
+                    alt={`${currentUser.name}'s avatar`}
+                    className="header__avatar-img"
+                  />
+                ) : (
+                  <div alt="Default avatar" className="header__default-avatar">
+                    {currentUser.name[0]}
+                  </div>
+                )}
               </div>
             </NavLink>
           </>

@@ -119,6 +119,21 @@
 .header__avatar-img {
   height: 40px;
   width: 40px;
+  border-radius: 50%;
+  border: 2px solid #00000080;
+}
+
+.header__default-avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid #00000080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 20px;
 }
 
 @media screen and (max-width: 964px) {

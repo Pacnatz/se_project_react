@@ -110,7 +110,7 @@ function SignupModal({
         />
       </label>
       <label htmlFor="signup-avatar" className="modal__label">
-        Avatar URL*
+        Avatar URL
         <input
           name="avatar"
           type="url"
@@ -119,7 +119,6 @@ function SignupModal({
           className="modal__input"
           value={values.avatar}
           onChange={handleChange}
-          required
         />
       </label>
       <p className={`modal__error-message${showError ? "" : "_hidden"}`}>
