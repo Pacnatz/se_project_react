@@ -25,7 +25,7 @@ export const getItems = () => {
   }).then(checkResponse);
 };
 
-export const addCard = ({ name, imageUrl, weather }) => {
+export const addCard = ({ name, imageUrl, weather, owner }) => {
   return fetch(`${baseURL}/items`, {
     headers: authHeaders,
     method: "POST",
@@ -34,6 +34,7 @@ export const addCard = ({ name, imageUrl, weather }) => {
       name: name,
       imageUrl: imageUrl,
       weather: weather,
+      owner: owner,
     }),
   }).then(checkResponse);
 };

@@ -1,8 +1,9 @@
 import "./Main.css";
+import { useContext } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Main({
   profileMenuOpened,
@@ -12,6 +13,7 @@ function Main({
   isWeatherDataLoading,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+  const { currentUser } = useContext(CurrentUserContext);
   return (
     <main>
       <WeatherCard
@@ -32,11 +34,13 @@ function Main({
             })
             .map((item) => {
               return (
-                <ItemCard
-                  key={item._id}
-                  item={item}
-                  onCardClick={handleCardClick}
-                />
+                item.owner === currentUser._id && (
+                  <ItemCard
+                    key={item._id}
+                    item={item}
+                    onCardClick={handleCardClick}
+                  />
+                )
               );
             })}
         </ul>

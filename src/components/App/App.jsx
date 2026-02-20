@@ -60,7 +60,7 @@ function App() {
 
   const onAddItem = (inputValues) => {
     setIsLoading(true);
-    return addCard(inputValues)
+    return addCard({ ...inputValues, owner: currentUser._id })
       .then((newItem) => {
         setClothingItems([newItem, ...clothingItems]);
         closeActiveModal();
@@ -220,7 +220,7 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute user={currentUser}>
                     <Profile
                       clothingItems={clothingItems}
                       handleAddClick={handleAddClick}
