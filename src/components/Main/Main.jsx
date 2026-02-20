@@ -33,6 +33,15 @@ function Main({
               return item.weather === weatherData.type;
             })
             .map((item) => {
+              if (item.owner === 0) {
+                return (
+                  <ItemCard
+                    key={item._id}
+                    item={item}
+                    onCardClick={handleCardClick}
+                  />
+                );
+              }
               return (
                 item.owner === currentUser._id && (
                   <ItemCard

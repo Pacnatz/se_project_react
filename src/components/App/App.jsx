@@ -11,10 +11,15 @@ import ItemModal from "../ItemModal/ItemModal";
 import DeleteModal from "../DeleteModal/DeleteModal";
 import LoginModal from "../LoginModal/LoginModal";
 import SignupModal from "../SignupModal/SignupModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import { checkToken, getItems, addCard, deleteCard } from "../../utils/api";
-import { coordinates, apiKey } from "../../utils/constants";
+import {
+  coordinates,
+  apiKey,
+  defaultClothingItems,
+} from "../../utils/constants";
 import { getToken, deleteToken } from "../../utils/token";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
@@ -36,6 +41,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   const handleCardClick = (card) => {
     setActiveModal("preview");
@@ -57,6 +63,9 @@ function App() {
   const handleSignupModal = () => {
     setActiveModal("signup");
   };
+  const handleEditProfileModal = () => {
+    setActiveModal("edit-profile");
+  };
 
   const onAddItem = (inputValues) => {
     setIsLoading(true);
@@ -69,6 +78,10 @@ function App() {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const onEditProfile = (inputValues) => {
+    setIsLoading(true);
   };
 
   const deleteItemHandler = (id) => {
@@ -93,6 +106,7 @@ function App() {
   const isDeleteOpen = activeModal == "delete";
   const isLoginOpen = activeModal == "login";
   const isSignupOpen = activeModal == "signup";
+  const isEditProfileOpen = activeModal == "edit-profile";
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
@@ -160,7 +174,12 @@ function App() {
           setCurrentUser({});
           deleteToken();
           console.error(err);
+        })
+        .finally(() => {
+          setIsCheckingAuth(false);
         });
+    } else {
+      setIsCheckingAuth(false);
     }
   }, []);
 
@@ -211,7 +230,9 @@ function App() {
                   <Main
                     profileMenuOpened={profileMenuOpened}
                     weatherData={weatherData}
-                    clothingItems={clothingItems}
+                    clothingItems={
+                      isLoggedIn ? clothingItems : defaultClothingItems
+                    }
                     handleCardClick={handleCardClick}
                     isWeatherDataLoading={isWeatherDataLoading}
                   />
@@ -220,11 +241,15 @@ function App() {
               <Route
                 path="/profile"
                 element={
-                  <ProtectedRoute user={currentUser}>
+                  <ProtectedRoute
+                    isLoggedIn={isLoggedIn}
+                    isCheckingAuth={isCheckingAuth}
+                  >
                     <Profile
                       clothingItems={clothingItems}
                       handleAddClick={handleAddClick}
                       handleCardClick={handleCardClick}
+                      handleEditProfileClick={handleEditProfileModal}
                     />
                   </ProtectedRoute>
                 }
@@ -264,6 +289,13 @@ function App() {
             altModal={handleLoginModal}
             setIsLoggedIn={setIsLoggedIn}
             setCurrentUser={setCurrentUser}
+          />
+          <EditProfileModal
+            isOpen={isEditProfileOpen}
+            onClose={closeActiveModal}
+            onEditProfile={onEditProfile}
+            setCurrentUser={setCurrentUser}
+            isLoading={isLoading}
           />
         </div>
       </CurrentUserContext.Provider>
