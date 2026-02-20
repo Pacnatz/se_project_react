@@ -77,7 +77,6 @@ function Header({
           className="header__close-btn"
         ></button>
         <ToggleSwitch />
-        {/* Need to add a div*/}
         {isLoggedIn ? (
           <>
             <button

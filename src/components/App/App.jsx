@@ -14,7 +14,14 @@ import SignupModal from "../SignupModal/SignupModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
-import { checkToken, getItems, addCard, deleteCard } from "../../utils/api";
+import {
+  checkToken,
+  getItems,
+  addCard,
+  deleteCard,
+  addCardLike,
+  removeCardLike,
+} from "../../utils/api";
 import {
   coordinates,
   apiKey,
@@ -110,6 +117,30 @@ function App() {
 
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
+  };
+
+  const handleCardLike = ({ itemId, isLiked }) => {
+    const token = localStorage.getItem("token");
+    // Check if this card is not currently liked
+    !isLiked
+      ? // if so, send a request to add the user's id to the card's likes arrays
+        // the first argument is the card's id
+        addCardLike({ itemId, token })
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === itemId ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err))
+      : // if not, send a request to remove the user's id from the card's likes array
+        // the first argument is the card's id
+        removeCardLike({ itemId, token })
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((item) => (item._id === itemId ? updatedCard : item)),
+            );
+          })
+          .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -235,6 +266,7 @@ function App() {
                     }
                     handleCardClick={handleCardClick}
                     isWeatherDataLoading={isWeatherDataLoading}
+                    onCardLike={handleCardLike}
                   />
                 }
               />
@@ -250,6 +282,7 @@ function App() {
                       handleAddClick={handleAddClick}
                       handleCardClick={handleCardClick}
                       handleEditProfileClick={handleEditProfileModal}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }

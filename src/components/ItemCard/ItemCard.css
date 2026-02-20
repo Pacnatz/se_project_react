@@ -4,18 +4,46 @@
   justify-content: center;
 }
 
-.card__name {
+.card__header {
   position: absolute;
   top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
+}
+.card__name {
+  margin: 0;
   padding: 2px 12px;
   background-color: #fff;
   color: #00000099;
-
   font-family: "Cabinet Grotesk", Arial, Helvetica, sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 20px;
   border-radius: 4px;
+}
+
+.card__like-button {
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  border: none;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/LikeButton.svg");
+}
+
+.card__like-button_liked {
+  padding: 0;
+  height: 20px;
+  width: 20px;
+  border: none;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("../../assets/DislikeButton.svg");
 }
 
 .card__img {

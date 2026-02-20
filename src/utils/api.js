@@ -56,3 +56,17 @@ export const editProfile = ({ name, avatar }) => {
     }),
   }).then(checkResponse);
 };
+
+export const addCardLike = ({ itemId, token }) => {
+  return fetch(`${baseURL}/items/${itemId}/likes`, {
+    headers: getAuthHeaders(),
+    method: "PUT",
+  }).then(checkResponse);
+};
+
+export const removeCardLike = ({ itemId, token }) => {
+  return fetch(`${baseURL}/items/${itemId}/likes`, {
+    headers: getAuthHeaders(),
+    method: "DELETE",
+  }).then(checkResponse);
+};

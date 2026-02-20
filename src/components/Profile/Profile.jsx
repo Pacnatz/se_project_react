@@ -7,6 +7,7 @@ function Profile({
   handleAddClick,
   handleCardClick,
   handleEditProfileClick,
+  onCardLike,
 }) {
   return (
     <main className="profile">
@@ -15,6 +16,7 @@ function Profile({
         clothingItems={clothingItems}
         handleAddClick={handleAddClick}
         handleCardClick={handleCardClick}
+        onCardLike={onCardLike}
       />
     </main>
   );
