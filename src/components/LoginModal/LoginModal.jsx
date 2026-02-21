@@ -3,7 +3,7 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { checkToken } from "../../utils/api";
 import { login } from "../../utils/auth";
-import { setToken, deleteToken } from "../../utils/token";
+import { setToken } from "../../utils/token";
 
 function LoginModal({
   isOpen,
@@ -35,7 +35,9 @@ function LoginModal({
           })
           .catch((error) => {
             console.error("Error checking token:", error);
-            handleSignOut();
+            deleteToken();
+            setIsLoggedIn(false);
+            setCurrentUser({});
           });
       })
       .catch((error) => {

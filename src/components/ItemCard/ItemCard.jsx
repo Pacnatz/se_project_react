@@ -9,11 +9,9 @@ function ItemCard({ item, onCardClick, onCardLike }) {
     onCardClick(item);
   };
   const handleCardLike = () => {
-    if (item.likes.length > 0) {
-      onCardLike({ itemId: item._id, isLiked: true });
-    } else {
-      onCardLike({ itemId: item._id, isLiked: false });
-    }
+    const isLiked = item.likes.some((id) => id === currentUser._id);
+
+    onCardLike({ itemId: item._id, isLiked });
   };
 
   return (
@@ -24,8 +22,8 @@ function ItemCard({ item, onCardClick, onCardLike }) {
           <button
             className={
               item.likes?.includes(currentUser._id)
-                ? "card__like-button"
-                : "card__like-button_liked"
+                ? "card__like-button_liked"
+                : "card__like-button"
             }
             onClick={handleCardLike}
           />

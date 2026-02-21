@@ -4,8 +4,8 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
   const defaultValues = {
-    name: "",
-    imageUrl: "",
+    clothingItemName: "",
+    clothingItemURL: "",
     weather: "",
     formValid: false,
   };
@@ -31,12 +31,12 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
       <label htmlFor="name" className="modal__label">
         Name
         <input
-          name="name"
+          name="clothingItemName"
           type="text"
           id="name"
           className="modal__input"
           placeholder="Name"
-          value={values.name}
+          value={values.clothingItemName}
           onChange={handleChange}
           required
         />
@@ -44,12 +44,12 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
       <label htmlFor="imageURL" className="modal__label">
         Image URL
         <input
-          name="imageUrl"
+          name="clothingItemURL"
           type="url"
           id="imageURL"
           className="modal__input"
           placeholder="Image URL"
-          value={values.imageUrl}
+          value={values.clothingItemURL}
           onChange={handleChange}
           required
         />

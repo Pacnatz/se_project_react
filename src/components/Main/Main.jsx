@@ -1,5 +1,5 @@
 import "./Main.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
@@ -14,7 +14,11 @@ function Main({
   onCardLike,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-  const { currentUser } = useContext(CurrentUserContext);
+  const { isLoggedIn } = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    console.log(clothingItems);
+  }, [clothingItems]);
   return (
     <main>
       <WeatherCard
@@ -34,24 +38,13 @@ function Main({
               return item.weather === weatherData.type;
             })
             .map((item) => {
-              if (item.owner === 0) {
-                return (
-                  <ItemCard
-                    key={item._id}
-                    item={item}
-                    onCardClick={handleCardClick}
-                  />
-                );
-              }
               return (
-                item.owner === currentUser._id && (
-                  <ItemCard
-                    key={item._id}
-                    item={item}
-                    onCardClick={handleCardClick}
-                    onCardLike={onCardLike}
-                  />
-                )
+                <ItemCard
+                  key={item._id}
+                  item={item}
+                  onCardClick={handleCardClick}
+                  onCardLike={isLoggedIn ? onCardLike : null}
+                />
               );
             })}
         </ul>

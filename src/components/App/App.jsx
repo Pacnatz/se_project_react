@@ -22,11 +22,7 @@ import {
   addCardLike,
   removeCardLike,
 } from "../../utils/api";
-import {
-  coordinates,
-  apiKey,
-  defaultClothingItems,
-} from "../../utils/constants";
+import { coordinates, apiKey } from "../../utils/constants";
 import { getToken, deleteToken } from "../../utils/token";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
@@ -258,9 +254,7 @@ function App() {
                   <Main
                     profileMenuOpened={profileMenuOpened}
                     weatherData={weatherData}
-                    clothingItems={
-                      isLoggedIn ? clothingItems : defaultClothingItems
-                    }
+                    clothingItems={clothingItems}
                     handleCardClick={handleCardClick}
                     isWeatherDataLoading={isWeatherDataLoading}
                     onCardLike={handleCardLike}
