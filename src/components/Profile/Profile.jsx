@@ -8,10 +8,14 @@ function Profile({
   handleCardClick,
   handleEditProfileClick,
   onCardLike,
+  handleSignOut,
 }) {
   return (
     <main className="profile">
-      <SideBar handleEditProfileClick={handleEditProfileClick} />
+      <SideBar
+        handleEditProfileClick={handleEditProfileClick}
+        handleSignOut={handleSignOut}
+      />
       <ClothesSection
         clothingItems={clothingItems}
         handleAddClick={handleAddClick}

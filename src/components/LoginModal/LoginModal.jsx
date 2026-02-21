@@ -35,9 +35,7 @@ function LoginModal({
           })
           .catch((error) => {
             console.error("Error checking token:", error);
-            setIsLoggedIn(false);
-            setCurrentUser({});
-            deleteToken();
+            handleSignOut();
           });
       })
       .catch((error) => {

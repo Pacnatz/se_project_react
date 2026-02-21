@@ -143,6 +143,12 @@ function App() {
           .catch((err) => console.log(err));
   };
 
+  const handleSignOut = () => {
+    deleteToken();
+    setIsLoggedIn(false);
+    setCurrentUser({});
+  };
+
   useEffect(() => {
     setIsWeatherDataLoading(true);
     if (navigator.geolocation) {
@@ -201,9 +207,7 @@ function App() {
           setCurrentUser(user);
         })
         .catch((err) => {
-          setIsLoggedIn(false);
-          setCurrentUser({});
-          deleteToken();
+          handleSignOut();
           console.error(err);
         })
         .finally(() => {
@@ -231,13 +235,6 @@ function App() {
       document.removeEventListener("keydown", handleEscClose);
     };
   }, [activeModal]); // watch activeModal here
-
-  // TEST
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "p") {
-      console.log(currentUser);
-    }
-  });
 
   return (
     <CurrentTemperatureUnitContext.Provider
@@ -283,6 +280,7 @@ function App() {
                       handleCardClick={handleCardClick}
                       handleEditProfileClick={handleEditProfileModal}
                       onCardLike={handleCardLike}
+                      handleSignOut={handleSignOut}
                     />
                   </ProtectedRoute>
                 }
