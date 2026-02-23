@@ -16,9 +16,6 @@ function Main({
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const { isLoggedIn } = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    console.log(clothingItems);
-  }, [clothingItems]);
   return (
     <main>
       <WeatherCard

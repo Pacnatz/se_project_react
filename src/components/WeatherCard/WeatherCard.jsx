@@ -14,7 +14,7 @@ function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
 
   // Default weathercard
   if (weatherOption === undefined) {
-    weatherOption = [weatherOptions[0]];
+    weatherOption = weatherOptions[0];
   }
 
   return (
@@ -24,11 +24,11 @@ function WeatherCard({ profileMenuOpened, weatherData, isWeatherDataLoading }) {
       }`}
     >
       <p className="weather-card__temp">
-        {isWeatherDataLoading ? "" : weatherData.temp[currentTemperatureUnit]}
+        {weatherData?.temp[currentTemperatureUnit]}
         &deg;{currentTemperatureUnit}
       </p>
       <img
-        src={isWeatherDataLoading ? "" : weatherOption?.url}
+        src={weatherOption?.url}
         alt={`Card showing: ${weatherOption?.day ? "day" : "night"} ${
           weatherOption?.condition
         }`}

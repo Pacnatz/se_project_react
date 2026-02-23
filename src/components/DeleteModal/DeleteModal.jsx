@@ -1,8 +1,30 @@
+import { useContext } from "react";
 import "./DeleteModal.css";
+import { deleteCard } from "../../utils/api";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-function DeleteModal({ isOpen, card, onClose, deleteItemHandler, buttonText }) {
+function DeleteModal({
+  isOpen,
+  onClose,
+  card,
+  onHandleSubmit,
+  setClothingItems,
+  clothingItems,
+}) {
+  const { isLoading } = useContext(CurrentUserContext);
+
   function handleDelete() {
-    deleteItemHandler(card._id);
+    const deleteItem = () => {
+      return deleteCard(card._id)
+        .then(() => {
+          setClothingItems(
+            clothingItems.filter((item) => item._id !== card._id),
+          );
+        })
+        .catch(console.error);
+    };
+
+    onHandleSubmit(deleteItem());
   }
   return (
     <div
@@ -27,7 +49,7 @@ function DeleteModal({ isOpen, card, onClose, deleteItemHandler, buttonText }) {
           type="button"
           className="delete-modal__confirm"
         >
-          {buttonText}
+          {isLoading ? "Deleting..." : "Yes, delete item"}
         </button>
         <button
           onClick={onClose}

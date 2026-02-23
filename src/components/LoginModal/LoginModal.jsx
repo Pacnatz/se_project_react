@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { checkToken } from "../../utils/api";
 import { login } from "../../utils/auth";
 import { setToken } from "../../utils/token";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function LoginModal({
   isOpen,
   onClose,
   altModal,
   setIsLoggedIn,
-  setCurrentUser,
+  onHandleSubmit,
 }) {
   const defaultValues = {
     email: "",
@@ -19,32 +20,35 @@ function LoginModal({
   };
   const [showError, setShowError] = useState(false);
   const { values, handleChange, setValues } = useForm(defaultValues);
+  const { setCurrentUser } = useContext(CurrentUserContext);
 
   function handleSubmit(evt) {
     evt.preventDefault();
     // Call our API to check if it matches
-    login(values)
-      .then((data) => {
-        setShowError(false);
-        onClose();
-        setToken(data.token);
-        checkToken()
-          .then((user) => {
-            setIsLoggedIn(true);
-            setCurrentUser(user);
-          })
-          .catch((error) => {
-            console.error("Error checking token:", error);
-            deleteToken();
-            setIsLoggedIn(false);
-            setCurrentUser({});
-          });
-      })
-      .catch((error) => {
-        console.error("Login failed:", error);
-        setShowError(true);
-      });
-    setValues(defaultValues); // Clear the entry
+    const loginRequest = () => {
+      return login(values)
+        .then((data) => {
+          setShowError(false);
+          setToken(data.token);
+          setValues(defaultValues); // Clear the entry
+          checkToken()
+            .then((user) => {
+              setIsLoggedIn(true);
+              setCurrentUser(user);
+            })
+            .catch((error) => {
+              console.error("Error checking token:", error);
+              deleteToken();
+              setIsLoggedIn(false);
+              setCurrentUser({});
+            });
+        })
+        .catch((error) => {
+          console.error("Login failed:", error);
+          setShowError(true);
+        });
+    };
+    onHandleSubmit(loginRequest());
   }
 
   return (
@@ -58,12 +62,12 @@ function LoginModal({
       isSubmitValid={values.formValid}
       altModal={altModal}
     >
-      <label htmlFor="login-email" className="modal__label">
+      <label htmlFor="loginEmail" className="modal__label">
         Email
         <input
           name="email"
           type="email"
-          id="login-email"
+          id="loginEmail"
           placeholder="Email"
           className="modal__input"
           value={values.email}
@@ -71,12 +75,12 @@ function LoginModal({
           required
         />
       </label>
-      <label htmlFor="login-password" className="modal__label">
+      <label htmlFor="loginPassword" className="modal__label">
         Password
         <input
           name="password"
           type="password"
-          id="login-password"
+          id="loginPassword"
           placeholder="Password"
           className="modal__input"
           value={values.password}

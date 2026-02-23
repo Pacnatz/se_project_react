@@ -8,65 +8,74 @@ const getAuthHeaders = () => ({
   Authorization: `Bearer ${localStorage.getItem("token")}`,
 });
 
+export const request = (url, options) => {
+  return fetch(`${baseURL}${url}`, options).then(checkResponse);
+};
+
 export const checkToken = () => {
-  return fetch(`${baseURL}/users/me`, {
+  return request("/users/me", {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-  }).then(checkResponse);
+  });
 };
 
 export const getItems = () => {
-  return fetch(`${baseURL}/items`, {
+  return request("/items", {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(checkResponse);
+  });
 };
 
-export const addCard = ({ name, imageUrl, weather, owner }) => {
-  return fetch(`${baseURL}/items`, {
+export const addCard = ({
+  clothingItemName,
+  clothingItemURL,
+  weather,
+  owner,
+}) => {
+  return request("/items", {
     headers: getAuthHeaders(),
     method: "POST",
     // Send data as a JSON string.
     body: JSON.stringify({
-      name: name,
-      imageUrl: imageUrl,
+      name: clothingItemName,
+      imageUrl: clothingItemURL,
       weather: weather,
       owner: owner,
     }),
-  }).then(checkResponse);
+  });
 };
 
 export const deleteCard = (itemId) => {
-  return fetch(`${baseURL}/items/${itemId}`, {
+  return request(`/items/${itemId}`, {
     headers: getAuthHeaders(),
     method: "DELETE",
-  }).then(checkResponse);
+  });
 };
 
 export const editProfile = ({ name, avatar }) => {
-  return fetch(`${baseURL}/users/me`, {
+  return request(`/users/me`, {
     headers: getAuthHeaders(),
     method: "PATCH",
     body: JSON.stringify({
       name: name,
       avatar: avatar,
     }),
-  }).then(checkResponse);
+  });
 };
 
 export const addCardLike = ({ itemId }) => {
-  return fetch(`${baseURL}/items/${itemId}/likes`, {
+  return request(`/items/${itemId}/likes`, {
     headers: getAuthHeaders(),
     method: "PUT",
-  }).then(checkResponse);
+  });
 };
 
 export const removeCardLike = ({ itemId }) => {
-  return fetch(`${baseURL}/items/${itemId}/likes`, {
+  return request(`/items/${itemId}/likes`, {
     headers: getAuthHeaders(),
     method: "DELETE",
-  }).then(checkResponse);
+  });
 };

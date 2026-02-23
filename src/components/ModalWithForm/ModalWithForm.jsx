@@ -1,4 +1,5 @@
 import "./ModalWithForm.css";
+import useModalClose from "../../hooks/useModalClose";
 
 function ModalWithForm({
   children,
@@ -11,8 +12,12 @@ function ModalWithForm({
   isSubmitValid,
   altModal,
 }) {
+  useModalClose(isOpen, onClose);
   return (
-    <div onClick={onClose} className={`modal ${isOpen ? "modal_open" : ""}`}>
+    <div
+      onClick={onClose}
+      className={`modal ${isOpen ? "modal_open" : ""}`}
+    >
       <div onClick={(e) => e.stopPropagation()} className="modal__content">
         <form onSubmit={onSubmit} className="modal__form">
           <h2 className="modal__title">{title}</h2>

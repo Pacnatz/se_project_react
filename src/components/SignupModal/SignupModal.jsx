@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useForm } from "../../hooks/useForm";
 import { checkToken } from "../../utils/api";
 import { login, register } from "../../utils/auth";
 import { setToken, deleteToken } from "../../utils/token";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function SignupModal({
   isOpen,
   onClose,
   altModal,
   setIsLoggedIn,
-  setCurrentUser,
+  onHandleSubmit,
 }) {
   const defaultValues = {
     email: "",
@@ -19,43 +20,46 @@ function SignupModal({
     avatar: "",
     formValid: false,
   };
+  const { setCurrentUser } = useContext(CurrentUserContext);
   const [showError, setShowError] = useState(false);
   const { values, handleChange, setValues } = useForm(defaultValues);
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    register(values)
-      .then(() => {
-        setShowError(false);
-        // Login Automatically
-        login(values)
-          .then((data) => {
-            setShowError(false);
-            onClose();
-            setToken(data.token);
-            checkToken()
-              .then((user) => {
-                setIsLoggedIn(true);
-                setCurrentUser(user);
-              })
-              .catch((error) => {
-                console.error("Error checking token:", error);
-                setIsLoggedIn(false);
-                setCurrentUser({});
-                deleteToken();
-              });
-          })
-          .catch((error) => {
-            console.error("Login failed:", error);
-            setShowError(true);
-          });
-        onClose();
-      })
-      .catch((error) => {
-        console.error("Registration failed:", error);
-        setShowError(true);
-      });
-    setValues(defaultValues); // Clear the entry
+    const registerRequest = () => {
+      return register(values)
+        .then(() => {
+          setShowError(false);
+          // Login Automatically
+          login(values)
+            .then((data) => {
+              setShowError(false);
+              setToken(data.token);
+              setValues(defaultValues); // Clear the entry
+              checkToken()
+                .then((user) => {
+                  setIsLoggedIn(true);
+                  setCurrentUser(user);
+                })
+                .catch((error) => {
+                  console.error("Error checking token:", error);
+                  setIsLoggedIn(false);
+                  setCurrentUser({});
+                  deleteToken();
+                });
+            })
+            .catch((error) => {
+              console.error("Login failed:", error);
+              setShowError(true);
+            });
+          onClose();
+        })
+        .catch((error) => {
+          console.error("Registration failed:", error);
+          setShowError(true);
+        });
+    };
+    onHandleSubmit(registerRequest());
   }
 
   return (
@@ -69,12 +73,12 @@ function SignupModal({
       isSubmitValid={values.formValid}
       altModal={altModal}
     >
-      <label htmlFor="signup-email" className="modal__label">
+      <label htmlFor="signUpEmail" className="modal__label">
         Email*
         <input
           name="email"
           type="email"
-          id="signup-email"
+          id="signUpEmail"
           placeholder="Email"
           className="modal__input"
           value={values.email}
@@ -82,12 +86,12 @@ function SignupModal({
           required
         />
       </label>
-      <label htmlFor="signup-password" className="modal__label">
+      <label htmlFor="signUpPassword" className="modal__label">
         Password*
         <input
           name="password"
           type="password"
-          id="signup-password"
+          id="signUpPassword"
           placeholder="Password"
           className="modal__input"
           value={values.password}
@@ -96,12 +100,12 @@ function SignupModal({
           required
         />
       </label>
-      <label htmlFor="signup-name" className="modal__label">
+      <label htmlFor="signUpName" className="modal__label">
         Name*
         <input
           name="name"
           type="text"
-          id="signup-name"
+          id="signUpName"
           placeholder="Name"
           className="modal__input"
           value={values.name}
@@ -109,12 +113,12 @@ function SignupModal({
           required
         />
       </label>
-      <label htmlFor="signup-avatar" className="modal__label">
+      <label htmlFor="signUpAvatar" className="modal__label">
         Avatar URL
         <input
           name="avatar"
           type="url"
-          id="signup-avatar"
+          id="signUpAvatar"
           placeholder="Avatar URL"
           className="modal__input"
           value={values.avatar}

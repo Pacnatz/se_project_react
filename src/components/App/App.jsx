@@ -70,34 +70,14 @@ function App() {
     setActiveModal("edit-profile");
   };
 
-  const onAddItem = (inputValues) => {
+  const onHandleSubmit = (request) => {
     setIsLoading(true);
-    return addCard({ ...inputValues, owner: currentUser._id })
-      .then((newItem) => {
-        setClothingItems([newItem, ...clothingItems]);
-        closeActiveModal();
-      })
+    request
+      .then(closeActiveModal)
       .catch(console.error)
       .finally(() => {
         setIsLoading(false);
       });
-  };
-
-  const onEditProfile = (inputValues) => {
-    setIsLoading(true);
-  };
-
-  const deleteItemHandler = (id) => {
-    deleteCard(id)
-      .then(() => {
-        setClothingItems(
-          clothingItems.filter((item) => {
-            return item._id != id;
-          }),
-        );
-        closeActiveModal();
-      })
-      .catch(console.error);
   };
 
   const closeActiveModal = () => {
@@ -127,7 +107,7 @@ function App() {
               cards.map((item) => (item._id === itemId ? updatedCard : item)),
             );
           })
-          .catch((err) => console.log(err))
+          .catch(console.err)
       : // if not, send a request to remove the user's id from the card's likes array
         // the first argument is the card's id
         removeCardLike({ itemId, token })
@@ -136,7 +116,7 @@ function App() {
               cards.map((item) => (item._id === itemId ? updatedCard : item)),
             );
           })
-          .catch((err) => console.log(err));
+          .catch(console.error);
   };
 
   const handleSignOut = () => {
@@ -156,7 +136,19 @@ function App() {
               const filteredData = filterWeatherData(data);
               setWeatherData(filteredData);
             })
-            .catch(console.error)
+            .catch((error) => {
+              // Fallback to default cords
+              console.error(error);
+              getWeather(coordinates, apiKey)
+                .then((data) => {
+                  const filteredData = filterWeatherData(data);
+                  setWeatherData(filteredData);
+                })
+                .catch(console.error)
+                .finally(() => {
+                  setIsWeatherDataLoading(false);
+                });
+            })
             .finally(() => {
               setIsWeatherDataLoading(false);
             });
@@ -177,13 +169,15 @@ function App() {
       );
     } else {
       // Geolocation not supported, use default
-      setIsWeatherDataLoading(false);
       getWeather(coordinates, apiKey)
         .then((data) => {
           const filteredData = filterWeatherData(data);
           setWeatherData(filteredData);
         })
-        .catch(console.error);
+        .catch(console.error)
+        .finally(() => {
+          setIsWeatherDataLoading(false);
+        });
     }
 
     // Item API onload
@@ -214,29 +208,13 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (!activeModal) return; // stop the effect not to add the listener if there is no active modal
-
-    const handleEscClose = (e) => {
-      // define the function inside useEffect not to lose the reference on rerendering
-      if (e.key === "Escape") {
-        closeActiveModal();
-      }
-    };
-
-    document.addEventListener("keydown", handleEscClose);
-
-    return () => {
-      // don't forget to add a clean up function for removing the listener
-      document.removeEventListener("keydown", handleEscClose);
-    };
-  }, [activeModal]); // watch activeModal here
-
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
-      <CurrentUserContext.Provider value={{ currentUser, isLoggedIn }}>
+      <CurrentUserContext.Provider
+        value={{ currentUser, setCurrentUser, isLoggedIn, isLoading }}
+      >
         <div className="app">
           <div className="app__content">
             <Header
@@ -285,42 +263,42 @@ function App() {
           <AddItemModal
             isOpen={isAddOpen}
             onClose={closeActiveModal}
-            onAddItem={onAddItem}
-            isLoading={isLoading}
+            setClothingItems={setClothingItems}
+            clothingItems={clothingItems}
+            onHandleSubmit={onHandleSubmit}
           />
           <ItemModal
             isOpen={isPreviewOpen}
-            card={selectedCard}
             onClose={closeActiveModal}
+            card={selectedCard}
             handleDeleteModal={handleDeleteModal}
           />
           <DeleteModal
             isOpen={isDeleteOpen}
             card={selectedCard}
             onClose={closeActiveModal}
-            deleteItemHandler={deleteItemHandler}
-            buttonText={isLoading ? "Deleting..." : "Yes, delete item"}
+            onHandleSubmit={onHandleSubmit}
+            setClothingItems={setClothingItems}
+            clothingItems={clothingItems}
           />
           <LoginModal
             isOpen={isLoginOpen}
             onClose={closeActiveModal}
             altModal={handleSignupModal}
             setIsLoggedIn={setIsLoggedIn}
-            setCurrentUser={setCurrentUser}
+            onHandleSubmit={onHandleSubmit}
           />
           <SignupModal
             isOpen={isSignupOpen}
             onClose={closeActiveModal}
             altModal={handleLoginModal}
             setIsLoggedIn={setIsLoggedIn}
-            setCurrentUser={setCurrentUser}
+            onHandleSubmit={onHandleSubmit}
           />
           <EditProfileModal
             isOpen={isEditProfileOpen}
             onClose={closeActiveModal}
-            onEditProfile={onEditProfile}
-            setCurrentUser={setCurrentUser}
-            isLoading={isLoading}
+            onHandleSubmit={onHandleSubmit}
           />
         </div>
       </CurrentUserContext.Provider>

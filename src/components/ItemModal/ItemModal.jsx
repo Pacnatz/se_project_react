@@ -1,23 +1,21 @@
 import { useContext } from "react";
 import "./ItemModal.css";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import useModalClose from "../../hooks/useModalClose";
 
-function ItemModal({ isOpen, card, onClose, handleDeleteModal }) {
+function ItemModal({ isOpen, onClose, card, handleDeleteModal }) {
+  useModalClose(isOpen, onClose);
   const { currentUser } = useContext(CurrentUserContext);
 
   const isOwn = card.owner === currentUser._id;
 
   return (
-    <div
-      onClick={onClose}
-      className={`modal__item ${isOpen ? "modal_open" : ""}`}
-    >
+    <div className={`modal modal__item ${isOpen ? "modal_open" : ""}`}>
       <div
         onClick={(e) => e.stopPropagation()}
         className="modal__content modal__content_type_image"
       >
         <button
-          onClick={onClose}
           type="button"
           className="modal__close-btn modal__close-btn_type_image"
         ></button>

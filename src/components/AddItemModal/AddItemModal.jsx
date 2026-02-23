@@ -1,8 +1,19 @@
+import { useContext } from "react";
 import { useForm } from "../../hooks/useForm";
+import { addCard } from "../../utils/api";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
+const AddItemModal = ({
+  isOpen,
+  onClose,
+  setClothingItems,
+  clothingItems,
+  onHandleSubmit,
+}) => {
+  const { currentUser, isLoading } = useContext(CurrentUserContext);
+
   const defaultValues = {
     clothingItemName: "",
     clothingItemURL: "",
@@ -14,11 +25,15 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onAddItem(values)
-      .then(() => {
-        setValues(defaultValues);
-      })
-      .catch(console.error);
+    const addItem = () => {
+      return addCard({ ...values, owner: currentUser._id })
+        .then((newItem) => {
+          setClothingItems([newItem, ...clothingItems]);
+          setValues(defaultValues);
+        })
+        .catch(console.error);
+    };
+    onHandleSubmit(addItem());
   }
   return (
     <ModalWithForm
@@ -28,12 +43,12 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
       isSubmitValid={values.formValid}
       isLoading={isLoading ? "Adding..." : "Add garment"}
     >
-      <label htmlFor="name" className="modal__label">
+      <label htmlFor="clothingItemName" className="modal__label">
         Name
         <input
           name="clothingItemName"
           type="text"
-          id="name"
+          id="clothingItemName"
           className="modal__input"
           placeholder="Name"
           value={values.clothingItemName}
@@ -41,12 +56,12 @@ const AddItemModal = ({ isOpen, onClose, onAddItem, isLoading }) => {
           required
         />
       </label>
-      <label htmlFor="imageURL" className="modal__label">
+      <label htmlFor="clothingItemURL" className="modal__label">
         Image URL
         <input
           name="clothingItemURL"
           type="url"
-          id="imageURL"
+          id="clothingItemURL"
           className="modal__input"
           placeholder="Image URL"
           value={values.clothingItemURL}
