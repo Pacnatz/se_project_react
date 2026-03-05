@@ -12,7 +12,7 @@ const AddItemModal = ({
   clothingItems,
   onHandleSubmit,
 }) => {
-  const { currentUser, isLoading } = useContext(CurrentUserContext);
+  const { isLoading } = useContext(CurrentUserContext);
 
   const defaultValues = {
     clothingItemName: "",
@@ -26,7 +26,7 @@ const AddItemModal = ({
   function handleSubmit(evt) {
     evt.preventDefault();
     const addItem = () => {
-      return addCard({ ...values, owner: currentUser._id })
+      return addCard(values)
         .then((newItem) => {
           setClothingItems([newItem, ...clothingItems]);
           setValues(defaultValues);
@@ -78,6 +78,7 @@ const AddItemModal = ({
             type="radio"
             value="hot"
             onChange={handleChange}
+            checked={values.weather === "hot"}
             required
             className="modal__radio-input"
           />
@@ -90,6 +91,7 @@ const AddItemModal = ({
             type="radio"
             value="warm"
             onChange={handleChange}
+            checked={values.weather === "warm"}
             className="modal__radio-input"
           />
           Warm
@@ -101,6 +103,7 @@ const AddItemModal = ({
             type="radio"
             value="cold"
             onChange={handleChange}
+            checked={values.weather === "cold"}
             className="modal__radio-input"
           />
           Cold

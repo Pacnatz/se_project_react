@@ -29,12 +29,7 @@ export const getItems = () => {
   });
 };
 
-export const addCard = ({
-  clothingItemName,
-  clothingItemURL,
-  weather,
-  owner,
-}) => {
+export const addCard = ({ clothingItemName, clothingItemURL, weather }) => {
   return request("/items", {
     headers: getAuthHeaders(),
     method: "POST",
@@ -43,7 +38,6 @@ export const addCard = ({
       name: clothingItemName,
       imageUrl: clothingItemURL,
       weather: weather,
-      owner: owner,
     }),
   });
 };
