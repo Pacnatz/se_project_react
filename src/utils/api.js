@@ -1,7 +1,9 @@
 import { checkResponse } from "./weatherApi";
 
-const baseURL = "http://localhost:3001";
-// const baseURL = "http://192.168.0.19:3001";
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? "https://api.ttfs.zinergy.net" // Must use api subdomain
+    : "http://localhost:3001";
 
 const getAuthHeaders = () => ({
   "Content-Type": "application/json",
