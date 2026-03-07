@@ -111,7 +111,7 @@ WTWR is a full-stack React application that helps users decide what to wear base
    npm run dev
    ```
 
-   Backend will run on `http://localhost:3001`
+   Backend will run on `https://api.ttfs.zinergy.net`
 
 2. In a separate terminal, start the frontend (in the `se_project_react` directory):
 
@@ -119,9 +119,9 @@ WTWR is a full-stack React application that helps users decide what to wear base
    npm run dev
    ```
 
-   Frontend will run on `http://localhost:3000`
+   Frontend will run on `https://ttfs.zinergy.net`
 
-3. Open `http://localhost:3000` in your browser
+3. Open `https://ttfs.zinergy.net` in your browser
 
 ### Access from Mobile Devices
 
@@ -135,7 +135,7 @@ WTWR is a full-stack React application that helps users decide what to wear base
 2. Update `src/utils/api.js` and `src/utils/auth.js` with your IP:
 
    ```javascript
-   const baseURL = "http://YOUR_IP:3000";
+   const baseURL = "https://ttfs.zinergy.net";
    ```
 
 3. Start the backend with host binding:
@@ -144,7 +144,7 @@ WTWR is a full-stack React application that helps users decide what to wear base
    npm run dev
    ```
 
-4. Access from mobile: `http://YOUR_IP:3000`
+4. Access from mobile: `https://ttfs.zinergy.net`
 
 ### Build for Production
 
@@ -300,12 +300,15 @@ All modals are controlled through a single `activeModal` state that determines w
 
 ## Live Demo
 
-[View Live Project](https://pacnatz.github.io/se_project_react/)
+[View Live Project](https://ttfs.zinergy.net)
 
-## Project Pitch Video
+## Project Pitch Videos
 
-Check out [this video](https://drive.google.com/file/d/18LmbyNBeVwe2cc4tZnPdb8BBsJ2WE8-V/view?usp=sharing), where I describe my
-project and some challenges I faced while building it.
+Check out these videos, where I describe my project
+and some challenges I faced while building it:
+
+- [WTWR Frontend](https://drive.google.com/file/d/1PYEj3XGuQZxeJunGi-1ull2oXVoOYHxS/view?usp=sharing)
+- [WTWR Backend](https://drive.google.com/file/d/1HCZqeSgEFA-XhSDkGSGd3W781Ft_gyoi/view?usp=sharing)
 
 ## Author
 

@@ -2,7 +2,7 @@
 
 This document provides a complete reference for all API endpoints used in the WTWR (What to Wear?) React frontend application.
 
-**Base URL:** `http://localhost:3000`
+**Base URL:** `https://ttfs.zinergy.net`
 
 ---
 
