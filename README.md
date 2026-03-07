@@ -1,5 +1,11 @@
 # WTWR (What to Wear?)
 
+## Deployed Links
+
+- Frontend (www): https://www.ttfs.zinergy.net
+- Frontend (root): https://ttfs.zinergy.net
+- Backend API: https://api.zinergy.net
+
 ## About the Project
 
 WTWR is a full-stack React application that helps users decide what to wear based on current weather conditions. The app fetches real-time weather data using the OpenWeather API and allows users to manage their wardrobe with a complete CRUD interface powered by an Express.js + MongoDB backend with JWT authentication.
@@ -23,6 +29,8 @@ WTWR is a full-stack React application that helps users decide what to wear base
 ## Technologies Used
 
 ### Frontend
+
+- **Frontend Repository**: https://github.com/Pacnatz/se_project_react
 
 - **React 18.3.1**: Component-based UI library with hooks
 - **React Router DOM 6.28.0**: Client-side routing
